@@ -55,4 +55,8 @@ class User extends Authenticatable
             $user->save();
         });
     }
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }
