@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Web\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,10 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', fn() => view('home'))->name('home');
+
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login.form');
-Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register.form');
-Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::get('/tasks', fn() => view('tasks.index'))->name('tasks');
