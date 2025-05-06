@@ -15,12 +15,15 @@ class TaskService
         ]);
 
         if (isset($data['tags'])) {
-            $task->tags()->attach($data['tags']);
+            $userTagIds = $user->tags()->pluck('id')->toArray();
+            $validTagIds = array_intersect($data['tags'], $userTagIds);
+
+            $task->tags()->attach($validTagIds);
         }
 
         return $task->load('tags');
     }
-    public function updateTask($data, $task)
+    public function updateTask($data, $task, $user)
     {
         $task->update([
             'title' => $data['title'],
@@ -28,7 +31,10 @@ class TaskService
         ]);
 
         if (isset($data['tags'])) {
-            $task->tags()->sync($data['tags']);
+            $userTagIds = $user->tags()->pluck('id')->toArray();
+            $validTagIds = array_intersect($data['tags'], $userTagIds);
+
+            $task->tags()->sync($validTagIds);
         }
 
         return $task->load('tags');

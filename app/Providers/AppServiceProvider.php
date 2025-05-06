@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Services\Tag\TagService;
 use App\Services\Task\TaskService;
 use App\Services\User\TokenAuthService;
+use App\Services\User\UserTag;
 use App\Services\User\UserTask;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +24,12 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton(UserTask::class, function ($app) {
             return new UserTask();
+        });
+        $this->app->singleton(TagService::class, function ($app) {
+            return new TagService();
+        });
+        $this->app->singleton(UserTag::class, function ($app) {
+            return new UserTag();
         });
     }
 

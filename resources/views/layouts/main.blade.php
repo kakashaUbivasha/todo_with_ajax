@@ -20,10 +20,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item me-2">
-                    <a class="btn btn-outline-primary" href="{{ route('login.form') }}">Вход</a>
+                    <a class="btn btn-outline-primary" href="{{ route('login') }}">Вход</a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-primary" href="{{ route('register.form') }}">Регистрация</a>
+                    <a class="btn btn-primary" href="{{ route('register') }}">Регистрация</a>
                 </li>
             </ul>
         </div>

@@ -41,7 +41,7 @@ class TaskController extends Controller
             $this->errorMessage($user, 'Unauthorized', 401);
             $task = $userTask->getUserTask($user, $id);
             $this->errorMessage($task, 'Task not found');
-            $updatedTask = $taskService->updateTask($request->validated(), $task);
+            $updatedTask = $taskService->updateTask($request->validated(), $task, $user);
             return response()->json(['message' => 'Задача обновлена', 'task' => $updatedTask], 201);
         }
         public function destroy(Request $request, $id, TaskService $taskService, TokenAuthService $authService, UserTask $userTask)
@@ -55,7 +55,7 @@ class TaskController extends Controller
         }
     private function errorMessage($value, $message, $code = 404)
     {
-        if (! $value) {
+        if (!$value) {
             abort(response()->json(['message' => $message], $code));
         }
     }

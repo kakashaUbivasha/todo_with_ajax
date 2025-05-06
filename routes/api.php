@@ -25,6 +25,12 @@ Route::post('/tasks', [TaskController::class, 'store']);
 Route::get('/tasks/{task}', [TaskController::class, 'show']);
 Route::patch('/tasks/{task}', [TaskController::class, 'update']);
 Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
+
+Route::get('/tags', [TagController::class, 'index']);
+Route::post('/tags', [TagController::class, 'store']);
+Route::get('/tags/{tag}', [TagController::class, 'show']);
+Route::patch('/tags/{tag}', [TagController::class, 'update']);
+Route::delete('/tags/{tag}', [TagController::class, 'destroy']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/tags', [TagController::class, 'index']);

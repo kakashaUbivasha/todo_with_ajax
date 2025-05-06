@@ -23,8 +23,8 @@ class TaskRequest extends FormRequest
     {
         return [
             'title' => 'required|string|min:3|max:20',
-            'text' => 'nullable|string|max:200',
-            'tags' => 'nullable|array',
+            'text' => 'required|string|max:200',
+            'tags' => 'array',
             'tags.*' => 'integer|exists:tags,id',
         ];
     }
@@ -34,6 +34,7 @@ class TaskRequest extends FormRequest
             'title.required' => 'Название обязательно для заполнения.',
             'title.min' => 'Название должно содержать не менее 3 символов.',
             'title.max' => 'Название не должно превышать 20 символов.',
+            'text.required'=>'Текст должен быть обязательно',
             'text.max' => 'Описание не должно превышать 200 символов.',
             'tags.array' => 'Теги должны быть в виде массива.',
             'tags.*.integer' => 'Каждый тег должен быть числом.',

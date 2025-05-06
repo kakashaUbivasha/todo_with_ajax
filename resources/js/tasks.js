@@ -53,15 +53,34 @@ $(document).ready(function () {
             }
         });
     });
-
-    // Создание тега
     $('#tag-form').on('submit', function (e) {
         e.preventDefault();
-        $.post('/api/tags', {title: $('#tag-title').val()}, function () {
-            $('#tag-title').val('');
-            loadTags();
+
+        const token = localStorage.getItem('api_token');
+        const id = $('#tag-id').val(); // если пусто — значит создаём
+        const method = id ? 'PATCH' : 'POST';
+        const url = id ? `/api/tags/${id}` : '/api/tags';
+
+        $.ajax({
+            url: url,
+            method: method,
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            data: {
+                title: $('#tag-title').val()
+            },
+            success: function () {
+                $('#tag-title').val('');
+                $('#tag-id').val('');
+                loadTags();
+            },
+            error: function (xhr) {
+                alert('Ошибка при сохранении тэга:' + (xhr.responseJSON?.message || 'Ошибка'));
+            }
         });
     });
+
 });
 
 function loadTasks() {
@@ -102,19 +121,35 @@ function loadTasks() {
 }
 
 function loadTags() {
-    $.get('/api/tags', function (tags) {
-        tagsCache = tags;
-        $('#tags').html('');
-        $('#tag-list').html('');
-        tags.forEach(tag => {
-            $('#tags').append(`<option value="${tag.id}">${tag.title}</option>`);
-            $('#tag-list').append(`
-                <li class="list-group-item d-flex justify-content-between">
-                    ${tag.title}
-                    <button class="btn btn-sm btn-outline-danger" onclick="deleteTag(${tag.id})">Удалить</button>
-                </li>
-            `);
-        });
+    const token = localStorage.getItem('api_token');
+
+    $.ajax({
+        url: '/api/tags',
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        success: function (tags) {
+            tagsCache = tags;
+            $('#tags').html('');
+            $('#tag-list').html('');
+            tags.forEach(tag => {
+                $('#tags').append(`<option value="${tag.id}">${tag.title}</option>`);
+                $('#tag-list').append(`
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>${tag.title}</span>
+                        <div>
+                            <button class="btn btn-sm btn-warning me-2" onclick="editTag(${tag.id}, '${tag.title}')">Изменить</button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteTag(${tag.id})">Удалить</button>
+                        </div>
+                    </li>
+                `);
+            });
+        },
+        error: function () {
+            // alert('Ошибка при загрузке тегов. Пожалуйста, авторизуйтесь снова.');
+            // window.location.href = '/login';
+        }
     });
 }
 
@@ -136,16 +171,34 @@ function deleteTask(id) {
         });
     }
 }
-
+function editTag(id, title) {
+    $('#tag-id').val(id);
+    $('#tag-title').val(title);
+    $('#tag-title').focus();
+}
 function deleteTag(id) {
     if (confirm('Удалить тег?')) {
+        const token = localStorage.getItem('api_token');
+
         $.ajax({
             url: `/api/tags/${id}`,
             method: 'DELETE',
-            success: loadTags
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            success: function () {
+                loadTags();
+                loadTasks();
+            },
+            error: function (xhr) {
+                alert('Не удалось удалить тэг: ' + (xhr.responseJSON?.message || 'Ошибка'));
+            }
         });
     }
 }
 
+
 window.editTask = editTask;
 window.deleteTask = deleteTask;
+window.editTag = editTag;
+window.deleteTag = deleteTag;

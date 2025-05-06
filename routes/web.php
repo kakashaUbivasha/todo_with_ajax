@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('home'))->name('home');
 
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login.form');
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register.form');
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::get('/tasks', fn() => view('tasks.index'))->name('tasks');
