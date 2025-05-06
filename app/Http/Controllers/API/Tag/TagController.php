@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Web\Tag;
+namespace App\Http\Controllers\API\Tag;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tag\TagRequest;
-use App\Models\Tag;
 use App\Services\Tag\TagService;
 use App\Services\User\TokenAuthService;
 use App\Services\User\UserTag;

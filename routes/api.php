@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\Web\Auth\AuthController;
-use App\Http\Controllers\Web\Tag\TagController;
-use App\Http\Controllers\Web\Task\TaskController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\Tag\TagController;
+use App\Http\Controllers\API\Task\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*

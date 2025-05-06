@@ -12,21 +12,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function login(LoginRequest $request)
-    {
-        $user = User::where('email', $request->email)->first();
-        if (!$user || !Hash::check($request->password, $user->password))
-        {
-            return response()->json(['message' => 'Неверные данные'], 401);
-        }
-        return response()->json(['token'=>$user->api_token], 200);
-    }
-    public function register(RegisterRequest $request)
-    {
-        $data = $request->validated();
-        User::create($data);
-        return redirect('/');
-    }
     public function showLogin()
     {
         return view('auth.login');

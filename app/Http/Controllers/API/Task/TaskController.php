@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Web\Task;
+namespace App\Http\Controllers\API\Task;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Task\TaskRequest;
-use App\Models\Task;
-use App\Models\User;
 use App\Services\Task\TaskService;
 use App\Services\User\TokenAuthService;
 use App\Services\User\UserTask;
